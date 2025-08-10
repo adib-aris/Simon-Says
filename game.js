@@ -88,6 +88,7 @@ function checkAnswer(currentColour) {
         "<br>Press any key to play again."
     );
     $(".btn").off("click", userInput);
+    $(".btn").on("click", firstRun);
     level = 0;
     gamePattern = [];
     playSound("wrong");
