@@ -10,15 +10,15 @@ var sound;
 
 var userChosenColour;
 
-$(".btn").on("click", firstRun);
+$(".btn").on("pointerup", firstRun);
 
-function firstRun(){
-if (level < 1) {
-    level++;
-    $("#level-title").html("Level " + level);
-    setTimeout(nextSequence, 1000);
-  }
-  $(".btn").off("click", firstRun);
+function firstRun() {
+    if (level < 1) {
+      level++;
+      $("#level-title").html("Level " + level);
+      setTimeout(nextSequence, 1000);
+    }
+    $(".btn").off("pointerup", firstRun);
 }
 
 function nextSequence() {
@@ -39,7 +39,7 @@ function simonSays(counter) {
     counter++;
     setTimeout(simonSays, 500, counter);
   } else {
-    $(".btn").on("click", userInput);
+    $(".btn").on("pointerup", userInput);
   }
 }
 
@@ -75,7 +75,7 @@ function checkAnswer(currentColour) {
       $("#level-title").html("Correct!");
       level++;
       userClickPattern = 0;
-      $(".btn").off("click", userInput);
+      $(".btn").off("pointerup", userInput);
       setTimeout(nextSequence, 1500);
     }
   } else {
@@ -87,8 +87,8 @@ function checkAnswer(currentColour) {
         highestLevel +
         "<br>Press any key to play again."
     );
-    $(".btn").off("click", userInput);
-    $(".btn").on("click", firstRun);
+    $(".btn").off("pointerup", userInput);
+    $(".btn").on("pointerup", firstRun);
     level = 0;
     gamePattern = [];
     playSound("wrong");
