@@ -6,7 +6,11 @@ var highestLevel = level;
 var buttonColours = ["red", "blue", "green", "yellow"];
 var randomChosenColour;
 
-var sound;
+
+// 0 = Red, 1 = Blue, 2 = Green, 3 = Yellow
+
+
+var sounds = [new Audio("sounds/red.mp3"), new Audio("sounds/blue.mp3"), new Audio("sounds/green.mp3"), new Audio("sounds/yellow.mp3"), new Audio("sounds/wrong.mp3")];
 
 var userChosenColour;
 
@@ -25,8 +29,8 @@ function firstRun() {
 function nextSequence() {
   $("#level-title").html("Level " + level);
   var randomNumber = Math.floor(Math.random() * 4);
-  randomChosenColour = randomNumber;
-  gamePattern.push(randomChosenColour);
+//  randomChosenColour = randomNumber;
+  gamePattern.push(randomNumber);
   console.log("Game pattern: " + gamePattern);
   simonSays(0);
 }
@@ -34,7 +38,8 @@ function nextSequence() {
 function simonSays(counter) {
   var color;
   if (counter < level) {
-    color = buttonColours[gamePattern[counter]];
+    //color = buttonColours[gamePattern[counter]];
+    color = gamePattern[counter];
     animatePress(color);
     playSound(color);
     counter++;
@@ -52,8 +57,11 @@ function userInput() {
 }
 
 function playSound(name) {
-  sound = new Audio("sounds/" + name + ".mp3");
-  sound.play();
+  if (!sounds[parseInt(name)].paused) {
+    let sound = new Audio("sounds/" +buttonColours[name] +".mp3");
+    sound.play();
+  }
+  sounds[parseInt(name)].play();
 }
 
 function animatePress(currentColour) {
@@ -64,7 +72,7 @@ function animatePress(currentColour) {
 }
 
 function checkAnswer(currentColour) {
-  if (currentColour == buttonColours[gamePattern[userClickPattern - 1]]) {
+  if (currentColour == gamePattern[userClickPattern - 1]) {
     console.log("Current color: " + currentColour);
     console.log("Line 63: " + buttonColours[gamePattern[userClickPattern - 1]]);
 
@@ -92,7 +100,7 @@ function checkAnswer(currentColour) {
     $(".btn").on("pointerup", firstRun);
     level = 0;
     gamePattern = [];
-    playSound("wrong");
+    playSound("4");
     userClickPattern = 0;
   }
 }
